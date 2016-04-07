@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Technique</title>
+    <style type="text/css">
+        @font-face {
+        font-family: 'OpenSans';
+        src: url('file:///android_asset/fonts/OpenSans-Regular.ttf');
+        }
+        body{
+            background-color: #fbfbfb;
+            position: relative;
+            padding: 40px 40px 35px 40px;
+            font-size: 22px;
+            font-family: 'OpenSans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        #content {
+            margin: 0px 33px 0px 35px;
+            line-height: 35px;
+            text-align: justify;
+        }
+        #content sup {
+            color: #00b3df;
+        }
+        #content sup:hover {
+            cursor: pointer;
+        }
+        #content sup:focus {
+            cursor: pointer;
+        }
+        #content sup:active {
+            cursor: pointer;
+        }
+        #content sup:hover {
+            cursor: pointer;
+        }
+        #content sup:focus {
+            cursor: pointer;
+        }
+        #content sup:active {
+            cursor: pointer;
+        }
+        #content sup:hover {
+            text-decoration: underline;
+        }
+        #content::selection {
+            background: rgba(46, 192, 241, 0.2);
+        }
+        #content::-moz-selection {
+            background: rgba(46, 192, 241, 0.2);
+        }
+        #content::first-letter {
+            font-size: 70px;
+            float: left;
+            padding: 16px 5px 0px 1px;
+            margin-left: -5px;
+        }
+        #content sup {
+        color: #00b3df;
+        }
+        #Lines_count {
+            height: 100%;
+            color: #FFF;
+            font-size: 12px;
+            margin-top: 2px;
+            position: absolute;
+            left: 40px;
+            width: 33px;
+        }
+        #Lines_count .number{
+            vertical-align: middle;
+            display: table-cell;
+        }
+        #Lines_count .Line_count {
+            display: table;
+            pointer-events: none;
+        }
+        #Lines_count .Line_count:nth-of-type(5n) {
+            color: #878787;
+        }
+        #Lines_count .Line_count:hover,
+        #Lines_count .Line_count.Line_hover {
+            color: #878787;
+        }
+        #native_action {
+            margin-top: 30px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="Lines_count"></div>
+<div id="content">
+    <p class="Lesson_content">TEXT_CONTENT</p>
+</div>
+<div id="native_action">
+    <button type="button" onclick="sendNativeAction()">Lancer l'action native</button>
+</div>
+
+
+<script>
+        function displayLineNumbers() {
+            var Lines_count         = document.getElementById("Lines_count");
+            var commutedLineHeight  = parseInt(window.getComputedStyle(document.getElementById("content")).lineHeight.replace('px' , ''));
+            var containerHeight     = document.getElementById("content").offsetHeight;
+            var nbLine              = containerHeight / commutedLineHeight;
+
+            Lines_count.innerHTML = "";
+            for (var i = 1 ; i < nbLine + 1 ; i++) {
+             Lines_count.innerHTML += '<span class="Line_count" style="height:'+ commutedLineHeight + 'px;"><span class="number">' + i + '<span></span>'
+            }
+        }
+
+        function sendNativeAction() {
+            var nativeMessageToDisplay = "Bien joué !";
+            window.location.href = "native://"+encodeURIComponent(nativeMessageToDisplay);
+        }
+
+ </script>
+</body>
+</html>
