@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lelivrescolaire.testtechnique">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".LlsApplication"
         android:allowBackup="true"
@@ -21,8 +22,7 @@
 
         <activity
             android:name=".activity.LibraryActivity"
-            android:label="@string/title_activity_library"
-            android:theme="@style/AppTheme">
+            android:label="@string/title_activity_library">
 
         </activity>
     </application>

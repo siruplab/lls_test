@@ -11,6 +11,7 @@ class LlsApplication : Application() {
         val books = mutableListOf<Book>()
 
         fun addBooks(newBooks : List<Book>) {
+            books.clear()
             books.addAll(newBooks)
         }
     }

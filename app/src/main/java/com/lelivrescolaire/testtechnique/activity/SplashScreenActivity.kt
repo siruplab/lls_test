@@ -28,6 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             override fun onPostExecute(result: Void?) {
                 startActivity(Intent(this@SplashScreenActivity, LibraryActivity::class.java))
+                finish()
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }

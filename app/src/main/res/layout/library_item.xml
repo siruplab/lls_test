@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/library_item_padding"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="@dimen/library_item_width"
+        android:layout_height="@dimen/library_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="4dp"
+        tools:src="@drawable/placeholder"
+        android:contentDescription="@string/cover" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="middle"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Un très long titre de livre" />
+</LinearLayout>
