@@ -56,15 +56,15 @@ class LibraryActivity : AppCompatActivity() {
             }
 
             override fun onBindViewHolder(holder: BookViewHolder?, position: Int) {
-                holder!!.bindBook(LlsApplication.books[position])
+                holder!!.bindBook(LlsApplication.bookList[position])
             }
 
             override fun getItemCount(): Int {
-                return LlsApplication.books.size
+                return LlsApplication.bookList.size
             }
 
             override fun getItemId(position: Int): Long {
-                return LlsApplication.books[position].id.toLong()
+                return LlsApplication.bookList[position].id.toLong()
             }
         }
         adapter.setHasStableIds(true)

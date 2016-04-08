@@ -18,7 +18,7 @@ import com.lelivrescolaire.testtechnique.model.Page
 import kotlinx.android.synthetic.main.activity_library.*
 
 class BookActivity : AppCompatActivity() {
-    val book : Book? by lazy {val id = intent.getIntExtra("id", 0); LlsApplication.books.find { it.id == id }}
+    val book: Book? by lazy { LlsApplication.bookIndex.get(intent.getIntExtra("id", 0)) }
 
     inner class PageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val titleView = (itemView as ViewGroup).findViewById(R.id.title) as TextView
