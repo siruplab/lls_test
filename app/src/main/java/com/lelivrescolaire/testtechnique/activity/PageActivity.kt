@@ -3,9 +3,12 @@ package com.lelivrescolaire.testtechnique.activity
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.annotation.Keep
+import android.support.annotation.MainThread
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Xml
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -18,6 +21,7 @@ import com.lelivrescolaire.testtechnique.model.Page
  */
 class PageActivity : AppCompatActivity() {
     val page: Page? by lazy { LlsApplication.pageIndex.get(intent.getIntExtra("id", 0)) }
+    private val webView: WebView by lazy { WebView(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +32,6 @@ class PageActivity : AppCompatActivity() {
             return
         }
 
-        val webView = WebView(this)
         title = page!!.title
 
         setContentView(webView)
@@ -43,30 +46,51 @@ class PageActivity : AppCompatActivity() {
             }
 
             override fun onPostExecute(result: String?) {
-                webView.loadDataWithBaseURL("file:///android_asset/", result, "text/html", Xml.Encoding.UTF_8.name, null)
-                webView.settings.allowFileAccessFromFileURLs = true
-                webView.settings.javaScriptEnabled = true
-                webView.setWebViewClient(object : WebViewClient() {
-                    override fun onPageFinished(view: WebView?, url: String?) {
-                        webView.evaluateJavascript("displayLineNumbers()", null);
-                    }
-
-                    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                        val uri = Uri.parse(url)
-
-                        if (uri.scheme == "native") {
-                            AlertDialog.Builder(this@PageActivity)
-                                    .setTitle(R.string.from_javascript)
-                                    .setMessage(uri.host)
-                                    .setPositiveButton(android.R.string.ok, null)
-                                    .show()
-                            return true
-                        } else {
-                            return false
-                        }
-                    }
-                })
+                setupWebView(result)
             }
+
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    @MainThread
+    fun setupWebView(result: String?) {
+        webView.loadDataWithBaseURL("file:///android_asset/", result, "text/html", Xml.Encoding.UTF_8.name, null)
+        webView.settings.allowFileAccessFromFileURLs = true
+        webView.settings.javaScriptEnabled = true
+        webView.setWebViewClient(object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                webView.evaluateJavascript("displayLineNumbers()", null);
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                val uri = Uri.parse(url)
+
+                if (uri.scheme == "native") {
+                    displayDialog(uri.host)
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+        })
+        webView.addJavascriptInterface(object {
+            // we could use the PageActivity object directly, but on old versions of Android, all
+            // methods were exposed, not just the ones annotated with @JavascriptInterface
+            @Suppress("unused")
+            @JavascriptInterface
+            @Keep
+            fun displayDialog(message : String) {
+                this@PageActivity.displayDialog(message)
+            }
+        }, "androidInterface")
+    }
+
+    private fun displayDialog(message : String) {
+        AlertDialog.Builder(this@PageActivity)
+                .setTitle(R.string.from_javascript)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
     }
 }

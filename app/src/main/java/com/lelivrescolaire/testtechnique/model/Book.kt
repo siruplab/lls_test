@@ -1,8 +1,11 @@
 package com.lelivrescolaire.testtechnique.model
 
+import android.support.annotation.Keep
+
 /**
  * Created by paour on 16/04/08.
  */
+@Keep
 data class Book(
         val id: Int,
         val title: String,
@@ -10,6 +13,7 @@ data class Book(
         val pages: List<Page>
 )
 
+@Keep
 data class Page(
         val id: Int,
         val title: String,

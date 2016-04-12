@@ -99,6 +99,7 @@
 </div>
 <div id="native_action">
     <button type="button" onclick="sendNativeAction()">Lancer l'action native</button>
+    <button type="button" onclick="sendNativeAction1()">Lancer l'action native 1</button>
 </div>
 
 
@@ -118,6 +119,10 @@
         function sendNativeAction() {
             var nativeMessageToDisplay = "Bien joué !";
             window.location.href = "native://"+encodeURIComponent(nativeMessageToDisplay);
+        }
+
+        function sendNativeAction1() {
+            window.androidInterface.displayDialog("Mieux joué !");
         }
 
  </script>
