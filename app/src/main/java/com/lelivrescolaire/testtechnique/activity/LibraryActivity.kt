@@ -41,7 +41,7 @@ class LibraryActivity : AppCompatActivity() {
 
         override fun onClick(v: View?) {
             startActivity(Intent(this@LibraryActivity, BookActivity::class.java)
-                    .putExtra("id", book!!.id))
+                    .putExtra("book_id", book!!.id))
         }
     }
 

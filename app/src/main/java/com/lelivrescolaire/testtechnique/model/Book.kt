@@ -11,7 +11,13 @@ data class Book(
         val title: String,
         val cover: String,
         val pages: List<Page>
-)
+) {
+    val pageIndex: Map<Int, Page> by lazy {
+        val index = mutableMapOf<Int, Page>()
+        pages.forEach { page -> index.put(page.id, page) }
+        index
+    }
+}
 
 @Keep
 data class Page(

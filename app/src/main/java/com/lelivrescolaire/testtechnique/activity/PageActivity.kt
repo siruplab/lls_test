@@ -20,7 +20,11 @@ import com.lelivrescolaire.testtechnique.model.Page
  * Created by paour on 16/04/08.
  */
 class PageActivity : AppCompatActivity() {
-    val page: Page? by lazy { LlsApplication.pageIndex.get(intent.getIntExtra("id", 0)) }
+    val page: Page? by lazy {
+        LlsApplication.bookIndex
+                .get(intent.getIntExtra("book_id", 0))
+                ?.pageIndex?.get(intent.getIntExtra("page_id", 0))
+    }
     private val webView: WebView by lazy { WebView(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,13 +84,13 @@ class PageActivity : AppCompatActivity() {
             @Suppress("unused")
             @JavascriptInterface
             @Keep
-            fun displayDialog(message : String) {
+            fun displayDialog(message: String) {
                 this@PageActivity.displayDialog(message)
             }
         }, "androidInterface")
     }
 
-    private fun displayDialog(message : String) {
+    private fun displayDialog(message: String) {
         AlertDialog.Builder(this@PageActivity)
                 .setTitle(R.string.from_javascript)
                 .setMessage(message)
