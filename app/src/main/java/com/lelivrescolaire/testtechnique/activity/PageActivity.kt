@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Xml
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
 import com.lelivrescolaire.testtechnique.LlsApplication
 import com.lelivrescolaire.testtechnique.R
@@ -40,7 +41,14 @@ class PageActivity : AppCompatActivity() {
             }
 
             override fun onPostExecute(result: String?) {
-                webView.loadData(result, "text/html", Xml.Encoding.UTF_8.name)
+                webView.loadDataWithBaseURL("file:///android_asset/", result, "text/html", Xml.Encoding.UTF_8.name, null)
+                webView.settings.allowFileAccessFromFileURLs = true
+                webView.settings.javaScriptEnabled = true
+                webView.setWebViewClient(object : WebViewClient() {
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        webView.evaluateJavascript("displayLineNumbers()", null);
+                    }
+                })
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
